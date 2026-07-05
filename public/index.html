@@ -513,7 +513,7 @@
 
       .assistant-tabs {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 6px;
         padding: 10px;
         border-bottom: 1px solid var(--line);
@@ -596,6 +596,94 @@
       .preset-grid button:hover {
         border-color: var(--teal);
         background: var(--teal-2);
+      }
+
+      .flow-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .flow-card {
+        display: grid;
+        grid-template-columns: 30px minmax(0, 1fr);
+        gap: 9px;
+        min-height: 82px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .flow-card:hover {
+        border-color: rgba(15, 118, 110, 0.56);
+        background: #f0fbf8;
+      }
+
+      .flow-icon {
+        width: 28px;
+        height: 28px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #e5f2ff;
+        color: #2563eb;
+        font-size: 15px;
+        font-weight: 800;
+      }
+
+      .flow-card:nth-child(3n + 2) .flow-icon {
+        background: #e1f7ef;
+        color: var(--green);
+      }
+
+      .flow-card:nth-child(3n) .flow-icon {
+        background: #fff0df;
+        color: var(--coral);
+      }
+
+      .flow-card strong,
+      .prompt-chip strong,
+      .model-card strong {
+        display: block;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+
+      .flow-card small,
+      .prompt-chip span,
+      .model-card span {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.42;
+      }
+
+      .prompt-market,
+      .model-grid {
+        display: grid;
+        gap: 8px;
+      }
+
+      .prompt-chip,
+      .model-card {
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--surface);
+        color: var(--ink);
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .prompt-chip:hover,
+      .model-card:hover {
+        border-color: var(--amber);
+        background: #fff7e8;
       }
 
       .suggestion-list,
@@ -828,7 +916,8 @@
         }
 
         .metric-grid,
-        .preset-grid {
+        .preset-grid,
+        .flow-grid {
           grid-template-columns: 1fr;
         }
 
@@ -846,7 +935,7 @@
           <div class="mark" aria-hidden="true"></div>
           <div>
             <h1>AI Article Studio</h1>
-            <span>长文编辑工作台</span>
+            <span>AI驱动全流程写作助手</span>
           </div>
         </div>
         <div class="doc-status" aria-live="polite">
@@ -922,6 +1011,7 @@
         <aside class="assistant">
           <nav class="assistant-tabs" aria-label="AI 面板">
             <button class="active" data-tab="compose">写作</button>
+            <button data-tab="flow">流程</button>
             <button data-tab="score">评分</button>
             <button data-tab="versions">版本</button>
           </nav>
@@ -958,6 +1048,59 @@
                 <button class="icon-btn" id="generateSuggestions" title="生成建议">✦</button>
               </div>
               <div class="suggestion-list" id="suggestionList"></div>
+            </div>
+          </section>
+
+          <section class="tab-panel" id="tab-flow">
+            <div class="panel-section">
+              <div class="panel-heading">
+                <h2>AI 流程能力</h2>
+              </div>
+              <div class="flow-grid">
+                <button class="flow-card" data-flow="deconstruct">
+                  <span class="flow-icon">拆</span>
+                  <span><strong>智能拆书</strong><small>提炼核心梗、情绪曲线与细纲节奏</small></span>
+                </button>
+                <button class="flow-card" data-flow="continue">
+                  <span class="flow-icon">续</span>
+                  <span><strong>灵活续写</strong><small>根据上文、框架和关键词补全段落</small></span>
+                </button>
+                <button class="flow-card" data-flow="framework">
+                  <span class="flow-icon">纲</span>
+                  <span><strong>框架搭建</strong><small>用积木式结构生成可编辑大纲</small></span>
+                </button>
+                <button class="flow-card" data-flow="prompts">
+                  <span class="flow-icon">词</span>
+                  <span><strong>提示词市场</strong><small>按写作阶段切换专业提示词</small></span>
+                </button>
+                <button class="flow-card" data-flow="draft">
+                  <span class="flow-icon">稿</span>
+                  <span><strong>初稿生成</strong><small>从标题、摘要和结构一键出稿</small></span>
+                </button>
+                <button class="flow-card" data-flow="model">
+                  <span class="flow-icon">模</span>
+                  <span><strong>智能推荐</strong><small>按风格匹配更合适的写作模型</small></span>
+                </button>
+              </div>
+            </div>
+            <div class="panel-section">
+              <div class="panel-heading">
+                <h3>提示词市场</h3>
+              </div>
+              <div class="prompt-market">
+                <button class="prompt-chip" data-prompt="plot"><strong>核心梗提炼</strong><span>把题材、冲突、转折和结尾钩子压缩成 4 句话。</span></button>
+                <button class="prompt-chip" data-prompt="emotion"><strong>情绪曲线</strong><span>标出开场、承压、反转、释放四个阅读峰值。</span></button>
+                <button class="prompt-chip" data-prompt="polish"><strong>去 AI 味润色</strong><span>删掉空泛套话，让句子更像真人写作。</span></button>
+              </div>
+            </div>
+            <div class="panel-section">
+              <div class="panel-heading">
+                <h3>模型风格</h3>
+              </div>
+              <div class="model-grid">
+                <button class="model-card" data-model="structure"><strong>结构模型</strong><span>适合拆书、细纲、论证顺序和章节节奏。</span></button>
+                <button class="model-card" data-model="style"><strong>风格模型</strong><span>适合续写、语气模仿、去 AI 味和标题改写。</span></button>
+              </div>
             </div>
           </section>
 
@@ -1459,6 +1602,120 @@
         ];
       }
 
+      function applyFlow(kind) {
+        const article = currentArticle();
+        const brief = article.brief || article.title || "这篇文章";
+        const flowSuggestions = {
+          deconstruct: [
+            { title: "核心梗", body: `这篇内容可以压成一句核心梗：一个写作者想提高产出，但真正卡住他的不是生成速度，而是结构判断、段落取舍和发布前的信心。` },
+            { title: "情绪曲线", body: "开场点出痛点，第二段放大低效感，中段给出流程工具的掌控感，结尾落到可执行的下一步。" },
+            { title: "细纲节奏", body: "建议按“问题出现 - 旧流程失效 - AI 流程介入 - 真实使用场景 - 发布动作”推进。" }
+          ],
+          prompts: buildPromptMarketIdeas(),
+          model: buildModelIdeas(),
+          continue: [{ title: "续写策略", body: `围绕“${brief}”，下一段先补一个具体场景，再接一句明确判断，最后给读者一个自然行动。` }]
+        };
+
+        if (kind === "continue") {
+          continueWriting();
+          renderSuggestions(flowSuggestions.continue);
+          return;
+        }
+
+        if (kind === "framework") {
+          insertFramework();
+          return;
+        }
+
+        if (kind === "draft") {
+          generateDraft();
+          return;
+        }
+
+        renderSuggestions(flowSuggestions[kind] || buildSuggestions());
+        showToast("流程建议已生成");
+      }
+
+      function insertFramework() {
+        const article = currentArticle();
+        const brief = article.brief || "文章核心问题";
+        const framework = `
+          <h2>核心梗</h2>
+          <p>${escapeHtml(brief)}。这一节用一句话告诉读者为什么现在要读下去。</p>
+          <h2>情绪曲线</h2>
+          <p>先写痛点，再写阻力，然后给出转折，最后释放可执行的解决路径。</p>
+          <h2>细纲节奏</h2>
+          <h3>问题</h3>
+          <p>读者现在遇到的具体卡点是什么。</p>
+          <h3>判断</h3>
+          <p>为什么旧办法无法继续解决这个问题。</p>
+          <h3>方法</h3>
+          <p>给出新的工作流、例子和行动建议。</p>
+        `;
+        insertAtCursor(framework);
+        refreshWorkspace();
+        showToast("已插入积木式框架");
+      }
+
+      function generateDraft() {
+        const article = currentArticle();
+        const draft = `
+          <h2>为什么这个问题会卡住写作者</h2>
+          <p>${escapeHtml(article.brief || "写作者真正需要的不是更快生成文字，而是更稳定地完成判断、组织和发布。")}</p>
+          <p>当文章进入长文阶段，作者面对的不是一个空白输入框，而是一组连续选择：先讲什么、删掉什么、用什么例子支撑、在哪里提醒读者行动。</p>
+          <h2>AI 应该进入完整流程</h2>
+          <p>更好的做法是把 AI 拆成流程能力：先拆出核心梗和情绪曲线，再搭出细纲，然后在每个段落里续写、润色和检查。</p>
+          <h2>最终产物要可编辑</h2>
+          <p>真正可用的初稿不是一次性答案，而是一份能继续修改的结构化文档。作者可以保留判断，也能快速替换表达。</p>
+        `;
+        insertAtCursor(draft);
+        refreshWorkspace();
+        showToast("已生成一版初稿");
+      }
+
+      function applyPrompt(kind) {
+        const prompts = {
+          plot: "提炼这篇文章的核心梗：题材、主冲突、关键转折、结尾钩子各用一句话说明。",
+          emotion: "为这篇文章设计情绪曲线：开场吸引、压力累积、认知反转、行动释放。",
+          polish: "去掉 AI 味和空泛套话，保留判断，让表达更像真实作者写出来。"
+        };
+        elements.promptInput.value = prompts[kind] || elements.promptInput.value;
+        renderSuggestions([{ title: "提示词已切换", body: elements.promptInput.value }]);
+        showToast("提示词已应用");
+      }
+
+      function chooseModel(kind) {
+        if (kind === "structure") {
+          elements.toneSelect.value = "专业克制";
+          renderSuggestions([
+            { title: "模型建议", body: "当前更适合使用结构模型：先处理拆书、细纲、章节顺序和论据缺口，再进入风格润色。" },
+            { title: "下一步", body: "点击“框架搭建”插入结构，再用评分面板检查结构完整度。" }
+          ]);
+        } else {
+          elements.toneSelect.value = "温和解释";
+          renderSuggestions([
+            { title: "模型建议", body: "当前更适合使用风格模型：处理续写、语气模仿、句子自然度和去 AI 味。" },
+            { title: "下一步", body: "选中一段正文后点击“改写”，或者用“去 AI 味润色”提示词处理整段。" }
+          ]);
+        }
+        showToast("模型风格已切换");
+      }
+
+      function buildPromptMarketIdeas() {
+        return [
+          { title: "拆书提示词", body: "把这篇内容拆成：核心梗、读者痛点、情绪曲线、细纲节奏和结尾钩子。" },
+          { title: "续写提示词", body: "根据上一段和当前大纲，续写 120 字，要求有具体场景、明确判断和自然转折。" },
+          { title: "润色提示词", body: "删掉套话，减少抽象形容词，用更具体的动词和例子替换空泛表达。" }
+        ];
+      }
+
+      function buildModelIdeas() {
+        return [
+          { title: "结构优先", body: "文章还在草稿期时，优先用结构模型处理大纲、节奏和段落目标。" },
+          { title: "风格优先", body: "文章已经成形后，优先用风格模型做续写、标题、开场和去 AI 味润色。" }
+        ];
+      }
+
       function formatBlock(tag) {
         elements.editor.focus();
         if (tag === "blockquote") {
@@ -1526,6 +1783,18 @@
 
       document.querySelectorAll("[data-preset]").forEach((button) => {
         button.addEventListener("click", () => applyPreset(button.dataset.preset));
+      });
+
+      document.querySelectorAll("[data-flow]").forEach((button) => {
+        button.addEventListener("click", () => applyFlow(button.dataset.flow));
+      });
+
+      document.querySelectorAll("[data-prompt]").forEach((button) => {
+        button.addEventListener("click", () => applyPrompt(button.dataset.prompt));
+      });
+
+      document.querySelectorAll("[data-model]").forEach((button) => {
+        button.addEventListener("click", () => chooseModel(button.dataset.model));
       });
 
       [elements.titleInput, elements.briefInput, elements.channelSelect].forEach((element) => {
