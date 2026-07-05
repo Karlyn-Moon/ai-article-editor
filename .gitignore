@@ -1,0 +1,7 @@
+node_modules/
+.opendeploy/
+outputs/
+work/
+.DS_Store
+.env
+.env.*
